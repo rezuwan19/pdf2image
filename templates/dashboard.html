@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Dashboard</h2>
+
+        <h3>Converted PDFs to Images:</h3>
+        <ul>
+            {% for folder in pdf_folders %}
+            <li>{{ folder }}</li>
+            {% endfor %}
+        </ul>
+
+        <a href="/">Back</a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>PDF & Image Converter</h1>
+        <a href="/dashboard">Dashboard</a>
+
+        <div class="card">
+            <form action="/pdf-to-images" method="POST" enctype="multipart/form-data">
+                <input type="file" name="pdfs" multiple accept=".pdf">
+                <button>Convert PDF → Images</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <form action="/images-to-pdf" method="POST" enctype="multipart/form-data">
+                <input type="file" name="images" multiple accept="image/*">
+                <button>Convert Images → PDF</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
