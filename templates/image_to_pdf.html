@@ -6,17 +6,24 @@
 </head>
 
 <body>
+
     <div class="container">
         <h2>Image → PDF</h2>
 
-        <form action="/convert-images" method="POST" enctype="multipart/form-data">
-            <input type="text" name="pdf_name" placeholder="PDF name" required>
-            <input type="file" name="images" multiple accept="image/*" required>
-            <button>Create PDF</button>
-        </form>
+        <input type="text" id="pdfName" placeholder="PDF name">
+        <input type="file" id="imgInput" accept="image/*" multiple>
 
+        <ul id="imgList"></ul>
+
+        <div class="progress">
+            <div id="bar"></div>
+        </div>
+
+        <button onclick="uploadImages()">Create PDF</button>
         <a href="/">⬅ Back</a>
     </div>
+
+    <script src="/static/js/main.js"></script>
 </body>
 
 </html>

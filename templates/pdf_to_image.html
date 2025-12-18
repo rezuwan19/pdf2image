@@ -6,23 +6,28 @@
 </head>
 
 <body>
+
     <div class="container">
         <h2>PDF → Image</h2>
 
-        <form action="/convert-pdf" method="POST" enctype="multipart/form-data">
-            <input type="file" name="pdfs" multiple accept=".pdf" required>
+        <input type="file" id="pdfInput" accept=".pdf" multiple>
+        <select id="format">
+            <option value="jpg">JPG</option>
+            <option value="jpeg">JPEG</option>
+            <option value="png">PNG</option>
+        </select>
 
-            <select name="format">
-                <option value="jpg">JPG</option>
-                <option value="jpeg">JPEG</option>
-                <option value="png">PNG</option>
-            </select>
+        <ul id="fileList"></ul>
 
-            <button>Convert</button>
-        </form>
+        <div class="progress">
+            <div id="bar"></div>
+        </div>
 
+        <button onclick="uploadPDF()">Convert</button>
         <a href="/">⬅ Back</a>
     </div>
+
+    <script src="/static/js/main.js"></script>
 </body>
 
 </html>

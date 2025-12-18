@@ -1,51 +1,75 @@
-let files = [];
-const input = document.getElementById('pdfInput');
-const list = document.getElementById('fileList');
-const bar = document.getElementById('bar');
-const status = document.getElementById('status');
+let pdfFiles = [];
+let imgFiles = [];
 
+const pdfInput = document.getElementById("pdfInput");
+const imgInput = document.getElementById("imgInput");
+const bar = document.getElementById("bar");
 
-input.onchange = () => {
-    for (let f of input.files) {
-        if (!files.some(x => x.name === f.name)) files.push(f);
-    }
-    input.value = '';
-    render();
-};
+if (pdfInput) {
+    pdfInput.onchange = () => {
+        for (let f of pdfInput.files) {
+            if (!pdfFiles.find(x => x.name === f.name)) {
+                pdfFiles.push(f);
+            }
+        }
+        pdfInput.value = "";
+        renderList(pdfFiles, "fileList");
+    };
+}
 
+if (imgInput) {
+    imgInput.onchange = () => {
+        for (let f of imgInput.files) {
+            if (!imgFiles.find(x => x.name === f.name)) {
+                imgFiles.push(f);
+            }
+        }
+        imgInput.value = "";
+        renderList(imgFiles, "imgList");
+    };
+}
 
-function render() {
-    list.innerHTML = '';
+function renderList(files, elementId) {
+    const ul = document.getElementById(elementId);
+    ul.innerHTML = "";
     files.forEach((f, i) => {
-        list.innerHTML += `<li>${i + 1}. ${f.name}</li>`;
+        ul.innerHTML += `<li>${i + 1}. ${f.name}</li>`;
     });
 }
 
+function uploadPDF() {
+    if (!pdfFiles.length) return alert("Select PDFs");
 
-function upload() {
-    if (!files.length) return alert('Select PDF');
     const fd = new FormData();
-    files.forEach(f => fd.append('pdfs', f));
+    pdfFiles.forEach(f => fd.append("pdfs", f));
+    fd.append("format", document.getElementById("format").value);
 
+    sendXHR(fd, "/convert-pdf");
+}
 
+function uploadImages() {
+    if (!imgFiles.length) return alert("Select images");
+
+    const fd = new FormData();
+    imgFiles.forEach(f => fd.append("images", f));
+    fd.append("pdf_name", document.getElementById("pdfName").value);
+
+    sendXHR(fd, "/convert-images");
+}
+
+function sendXHR(fd, url) {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/pdf-to-images');
-
+    xhr.open("POST", url);
 
     xhr.upload.onprogress = e => {
         if (e.lengthComputable) {
-            bar.style.width = (e.loaded / e.total * 100) + '%';
-            status.innerText = 'Uploading...';
+            bar.style.width = (e.loaded / e.total * 100) + "%";
         }
     };
 
-
     xhr.onload = () => {
-        status.innerText = 'Done';
-        bar.style.width = '100%';
-        window.location.href = '/dashboard';
+        window.location.href = "/dashboard";
     };
-
 
     xhr.send(fd);
 }
