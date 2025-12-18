@@ -1,34 +1,53 @@
 body {
     font-family: Arial;
-    background: #f2f2f2;
+    background: #f2f2f2
 }
 
 .container {
     max-width: 600px;
     margin: auto;
+    padding: 15px
+}
+
+.card {
+    background: #fff;
     padding: 15px;
+    margin-top: 15px;
+    border-radius: 8px
 }
 
 input,
 button {
     width: 100%;
     padding: 10px;
-    margin-top: 10px;
-}
-
-.card {
-    background: white;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 8px;
+    margin-top: 10px
 }
 
 button {
     background: #007bff;
-    color: white;
-    border: none;
+    color: #fff;
+    border: none
 }
 
-ul {
-    padding-left: 20px;
+.progress {
+    height: 8px;
+    background: #ddd;
+    border-radius: 5px
+}
+
+#bar {
+    height: 100%;
+    width: 0;
+    background: #28a745
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px
+}
+
+.box img {
+    width: 100%;
+    border-radius: 5px
 }

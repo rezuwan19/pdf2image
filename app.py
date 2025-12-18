@@ -1,7 +1,9 @@
 import os
 import fitz  # PyMuPDF
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, send_file
 from werkzeug.utils import secure_filename
+from reportlab.pdfgen import canvas
+from PIL import Image
 
 app = Flask(__name__)
 
@@ -9,53 +11,49 @@ UPLOAD_PDF = "uploads/pdfs"
 UPLOAD_IMG = "uploads/images"
 OUTPUT_DIR = "output/pdf_to_images"
 
-# Create folders if not exist
+# Create folders
 for folder in [UPLOAD_PDF, UPLOAD_IMG, OUTPUT_DIR]:
     os.makedirs(folder, exist_ok=True)
 
-# ---------------- ROUTES ----------------
+
 @app.route("/")
 def home():
     return render_template("index.html")
 
+
 @app.route("/pdf-to-images", methods=["POST"])
 def pdf_to_images():
-    files = request.files.getlist("pdfs")  # Multiple PDF support
+    files = request.files.getlist("pdfs")
 
     for pdf in files:
         filename = secure_filename(pdf.filename)
         pdf_path = os.path.join(UPLOAD_PDF, filename)
         pdf.save(pdf_path)
 
-        # Create a folder with PDF filename (without extension)
         folder_name = os.path.splitext(filename)[0]
         out_folder = os.path.join(OUTPUT_DIR, folder_name)
         os.makedirs(out_folder, exist_ok=True)
 
-        # Convert PDF to images
         doc = fitz.open(pdf_path)
-        for page_number in range(len(doc)):
-            pix = doc.load_page(page_number).get_pixmap(dpi=300)
-            image_name = f"page_{page_number+1}.png"
-            pix.save(os.path.join(out_folder, image_name))
+        for i in range(len(doc)):
+            page = doc.load_page(i)
+            pix = page.get_pixmap(dpi=300)
+            pix.save(os.path.join(out_folder, f"page_{i+1}.png"))
 
-    return redirect("/dashboard")
+    return "OK"
+
 
 @app.route("/images-to-pdf", methods=["POST"])
 def images_to_pdf():
     files = request.files.getlist("images")
-    out_folder = os.path.join("output/images_to_pdf")
-    os.makedirs(out_folder, exist_ok=True)
+    output_pdf = "output/images_to_pdf/output.pdf"
+    os.makedirs(os.path.dirname(output_pdf), exist_ok=True)
 
-    pdf_path = os.path.join(out_folder, "output.pdf")
-    from reportlab.pdfgen import canvas
-    from PIL import Image
-
-    c = canvas.Canvas(pdf_path)
+    c = canvas.Canvas(output_pdf)
 
     for img in files:
-        name = secure_filename(img.filename)
-        path = os.path.join(UPLOAD_IMG, name)
+        filename = secure_filename(img.filename)
+        path = os.path.join(UPLOAD_IMG, filename)
         img.save(path)
 
         image = Image.open(path)
@@ -65,15 +63,26 @@ def images_to_pdf():
         c.showPage()
 
     c.save()
-    return redirect("/dashboard")
+    return send_file(output_pdf, as_attachment=True)
+
 
 @app.route("/dashboard")
 def dashboard():
-    # List all folders (PDF converted images)
-    pdf_folders = []
-    if os.path.exists(OUTPUT_DIR):
-        pdf_folders = sorted(os.listdir(OUTPUT_DIR))
-    return render_template("dashboard.html", pdf_folders=pdf_folders)
+    folders = sorted(os.listdir(OUTPUT_DIR))
+    return render_template("dashboard.html", pdf_folders=folders)
+
+
+@app.route("/preview/<folder>")
+def preview(folder):
+    folder_path = os.path.join(OUTPUT_DIR, folder)
+    images = sorted(os.listdir(folder_path))
+    return render_template("preview.html", folder=folder, images=images)
+
+
+@app.route("/image/<folder>/<filename>")
+def image(folder, filename):
+    return send_file(os.path.join(OUTPUT_DIR, folder, filename))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

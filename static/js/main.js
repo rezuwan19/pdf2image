@@ -1,47 +1,51 @@
-let selectedFiles = [];
+let files = [];
+const input = document.getElementById('pdfInput');
+const list = document.getElementById('fileList');
+const bar = document.getElementById('bar');
+const status = document.getElementById('status');
 
-const input = document.getElementById("pdfInput");
-const list = document.getElementById("fileList");
 
-input.addEventListener("change", () => {
-    for (let file of input.files) {
-        // Prevent duplicate files
-        if (!selectedFiles.some(f => f.name === file.name)) {
-            selectedFiles.push(file);
-        }
+input.onchange = () => {
+    for (let f of input.files) {
+        if (!files.some(x => x.name === f.name)) files.push(f);
     }
-    renderList();
-    input.value = ""; // IMPORTANT: reset input
-});
+    input.value = '';
+    render();
+};
 
-function renderList() {
-    list.innerHTML = "";
-    selectedFiles.forEach((file, index) => {
-        const li = document.createElement("li");
-        li.textContent = `${index + 1}. ${file.name}`;
-        list.appendChild(li);
+
+function render() {
+    list.innerHTML = '';
+    files.forEach((f, i) => {
+        list.innerHTML += `<li>${i + 1}. ${f.name}</li>`;
     });
 }
 
-function submitPDFs() {
-    if (selectedFiles.length === 0) {
-        alert("Please select at least one PDF");
-        return;
-    }
 
-    const formData = new FormData();
-    selectedFiles.forEach(file => {
-        formData.append("pdfs", file);
-    });
+function upload() {
+    if (!files.length) return alert('Select PDF');
+    const fd = new FormData();
+    files.forEach(f => fd.append('pdfs', f));
 
-    fetch("/pdf-to-images", {
-        method: "POST",
-        body: formData
-    })
-        .then(() => {
-            selectedFiles = [];
-            renderList();
-            window.location.href = "/dashboard";
-        })
-        .catch(err => alert("Upload failed"));
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/pdf-to-images');
+
+
+    xhr.upload.onprogress = e => {
+        if (e.lengthComputable) {
+            bar.style.width = (e.loaded / e.total * 100) + '%';
+            status.innerText = 'Uploading...';
+        }
+    };
+
+
+    xhr.onload = () => {
+        status.innerText = 'Done';
+        bar.style.width = '100%';
+        window.location.href = '/dashboard';
+    };
+
+
+    xhr.send(fd);
 }

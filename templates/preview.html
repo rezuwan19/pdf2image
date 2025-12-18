@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>{{ folder }}</h2>
+        <a href="/dashboard">Back</a>
+        <div class="grid">
+            {% for img in images %}
+            <div class="box">
+                <img src="/image/{{ folder }}/{{ img }}">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
