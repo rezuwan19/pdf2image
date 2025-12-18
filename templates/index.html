@@ -7,24 +7,27 @@
 </head>
 
 <body>
+
     <div class="container">
-        <h1>PDF & Image Converter</h1>
+        <h1>PDF → Image Converter</h1>
         <a href="/dashboard">Dashboard</a>
 
         <div class="card">
-            <form action="/pdf-to-images" method="POST" enctype="multipart/form-data">
-                <input type="file" name="pdfs" multiple accept=".pdf">
-                <button>Convert PDF → Images</button>
-            </form>
+            <input type="file" id="pdfInput" accept=".pdf" multiple>
+            <ul id="fileList"></ul>
+
+            <button onclick="submitPDFs()">Convert PDFs</button>
         </div>
 
         <div class="card">
             <form action="/images-to-pdf" method="POST" enctype="multipart/form-data">
                 <input type="file" name="images" multiple accept="image/*">
-                <button>Convert Images → PDF</button>
+                <button>Images → PDF</button>
             </form>
         </div>
     </div>
+
+    <script src="/static/js/main.js"></script>
 </body>
 
 </html>
