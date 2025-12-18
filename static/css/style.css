@@ -1,53 +1,33 @@
 body {
     font-family: Arial;
-    background: #f2f2f2
+    background: #f2f2f2;
 }
 
 .container {
-    max-width: 600px;
+    max-width: 500px;
     margin: auto;
-    padding: 15px
+    background: #fff;
+    padding: 20px;
+    margin-top: 50px;
+    border-radius: 8px;
 }
 
-.card {
-    background: #fff;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 8px
+.btn,
+button {
+    display: block;
+    padding: 10px;
+    margin-top: 10px;
+    background: #007bff;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
 }
 
 input,
-button {
+select {
     width: 100%;
-    padding: 10px;
-    margin-top: 10px
-}
-
-button {
-    background: #007bff;
-    color: #fff;
-    border: none
-}
-
-.progress {
-    height: 8px;
-    background: #ddd;
-    border-radius: 5px
-}
-
-#bar {
-    height: 100%;
-    width: 0;
-    background: #28a745
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px
-}
-
-.box img {
-    width: 100%;
-    border-radius: 5px
+    padding: 8px;
+    margin-top: 10px;
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Image → PDF</h2>
+
+        <form action="/convert-images" method="POST" enctype="multipart/form-data">
+            <input type="text" name="pdf_name" placeholder="PDF name" required>
+            <input type="file" name="images" multiple accept="image/*" required>
+            <button>Create PDF</button>
+        </form>
+
+        <a href="/">⬅ Back</a>
+    </div>
+</body>
+
+</html>

@@ -7,15 +7,15 @@
 
 <body>
     <div class="container">
-        <h2>{{ folder }}</h2>
-        <a href="/dashboard">Back</a>
-        <div class="grid">
+        <h2>{{ title }}</h2>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,150px);gap:10px;">
             {% for img in images %}
-            <div class="box">
-                <img src="/image/{{ folder }}/{{ img }}">
-            </div>
+            <img src="/image-file/{{ folder }}/{{ img }}" style="width:100%">
             {% endfor %}
         </div>
+
+        <a href="/dashboard">⬅ Back</a>
     </div>
 </body>
 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>PDF → Image</h2>
+
+        <form action="/convert-pdf" method="POST" enctype="multipart/form-data">
+            <input type="file" name="pdfs" multiple accept=".pdf" required>
+
+            <select name="format">
+                <option value="jpg">JPG</option>
+                <option value="jpeg">JPEG</option>
+                <option value="png">PNG</option>
+            </select>
+
+            <button>Convert</button>
+        </form>
+
+        <a href="/">⬅ Back</a>
+    </div>
+</body>
+
+</html>

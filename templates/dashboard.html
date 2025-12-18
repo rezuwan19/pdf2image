@@ -7,13 +7,23 @@
 
 <body>
     <div class="container">
-        <h2>Converted PDFs</h2>
+        <h2>Dashboard</h2>
+
+        <h3>📁 PDF → Image</h3>
         <ul>
-            {% for f in pdf_folders %}
-            <li><a href="/preview/{{ f }}">{{ f }}</a></li>
+            {% for f in image_folders %}
+            <li><a href="/preview/images/{{ f }}">{{ f }}</a></li>
             {% endfor %}
         </ul>
-        <a href="/">Back</a>
+
+        <h3>📄 Image → PDF</h3>
+        <ul>
+            {% for p in pdf_files %}
+            <li><a href="/preview/pdf/{{ p }}">{{ p }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <a href="/">⬅ Home</a>
     </div>
 </body>
 
