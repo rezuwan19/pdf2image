@@ -14,7 +14,7 @@ body {
 
 .btn,
 button {
-    display: block;
+    display: left;
     padding: 10px;
     margin-top: 10px;
     background: #007bff;
