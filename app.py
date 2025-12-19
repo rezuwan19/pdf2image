@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, send_file, redirect, url_for
 from werkzeug.utils import secure_filename
 from PIL import Image
 from reportlab.pdfgen import canvas
+from flask import send_from_directory
 
 app = Flask(__name__)
 
@@ -50,6 +51,30 @@ def convert_pdf():
         for i in range(len(doc)):
             pix = doc.load_page(i).get_pixmap(dpi=300)
             pix.save(os.path.join(out_folder, f"{base}_page_{i+1}.{fmt}"))
+
+@app.route("/download/image/<folder>/<filename>")
+def download_single_image(folder, filename):
+    folder_path = os.path.join(PDF_IMG_OUT, folder)
+    return send_from_directory(
+        folder_path,
+        filename,
+        as_attachment=True
+    )
+
+@app.route("/view/<folder>/<filename>")
+def view_image(folder, filename):
+    return render_template(
+        "image_view.html",
+        folder=folder,
+        filename=filename
+    )
+
+@app.route("/output/pdf_to_images/<folder>/<filename>")
+def serve_image(folder, filename):
+    return send_from_directory(
+        os.path.join(PDF_IMG_OUT, folder),
+        filename
+    )
 
     # ✅ REDIRECT (VERY IMPORTANT)
     return redirect(url_for("dashboard"))

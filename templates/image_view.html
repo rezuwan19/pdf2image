@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Image</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>{{ filename }}</h2>
+
+    <img src="/output/pdf_to_images/{{ folder }}/{{ filename }}"
+         style="width:100%;border-radius:12px;">
+
+    <a href="/download/image/{{ folder }}/{{ filename }}">
+        ⬇ Download
+    </a>
+
+    <a href="/preview/{{ folder }}">Dashboard</a>
+</div>
+
+</body>
+</html>

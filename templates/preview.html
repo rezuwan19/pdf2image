@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+    <title>Image Preview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
-
 <body>
-    <div class="container">
-        <h2>{{ title }}</h2>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,150px);gap:10px;">
-            {% for img in images %}
-            <img src="/image-file/{{ folder }}/{{ img }}" style="width:100%">
-            {% endfor %}
+<div class="container">
+    <h2>{{ folder }}</h2>
+
+    {% for img in images %}
+        <div style="margin-bottom:15px;">
+            <a href="/view/{{ folder }}/{{ img }}">
+                <img src="/output/pdf_to_images/{{ folder }}/{{ img }}"
+                     style="width:100%;border-radius:10px;">
+            </a>
+
+            <a href="/download/image/{{ folder }}/{{ img }}" style="background: #007bff; color: white; display: block; padding: 10px; text-align: center; text-decoration: none; border: none; border-radius: 5px;">
+            Download
+            </a>
         </div>
+    {% endfor %}
 
-        <a href="/dashboard" style="background: #007bff; color: white; display: right; padding: 10px; text-align: center; text-decoration: none; border: none; border-radius: 5px;">Back</a>
-    </div>
+    <a href="/dashboard" style="background: #007bff; color: white; display: left: auto; padding: 10px; text-align: center; text-decoration: none; border: none; border-radius: 5px;">Dashboard</a>
+
+    <a href="/" style="background: #007bff; color: white; display: right: auto; padding: 10px; text-align: center; text-decoration: none; border: none; border-radius: 5px;">Home</a>
+</div>
+
 </body>
-
 </html>
