@@ -31,3 +31,11 @@ select {
     padding: 8px;
     margin-top: 10px;
 }
+
+#searchBox {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
