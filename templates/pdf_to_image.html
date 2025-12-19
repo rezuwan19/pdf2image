@@ -11,18 +11,17 @@
         <h2>PDF → Image</h2>
 
         <input type="file" id="pdfInput" accept=".pdf" multiple>
-        <select id="format">
-            <option value="jpg">JPG</option>
-            <option value="jpeg">JPEG</option>
-            <option value="png">PNG</option>
-        </select>
 
         <ul id="fileList"></ul>
 
         <div class="progress">
             <div id="bar"></div>
         </div>
-
+        <select id="format">
+            <option value="jpg">JPG</option>
+            <option value="jpeg">JPEG</option>
+            <option value="png">PNG</option>
+            </select>
         <button onclick="uploadPDF()">Convert</button>
         <a href="/">⬅ Back</a>
     </div>
