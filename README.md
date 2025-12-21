@@ -88,7 +88,7 @@ pdf-image-converter/
 ## ⚙️ Installation & Setup
 ### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/your-username/pdf-image-converter.git
+git clone https://github.com/rezuwan19/pdf-image-converter.git
 cd pdf-image-converter
 ```
 ### 2️⃣ Create virtual environment (recommended)
